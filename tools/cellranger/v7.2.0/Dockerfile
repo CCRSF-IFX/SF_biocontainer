@@ -26,3 +26,4 @@ RUN \
     export PATH=/opt/cellranger-$CELLRANGER_VER:$PATH && \
     ln -s /opt/cellranger-$CELLRANGER_VER/cellranger /usr/bin/cellranger && \
     rm -rf /opt/cellranger-$CELLRANGER_VER.tar.gz
+
