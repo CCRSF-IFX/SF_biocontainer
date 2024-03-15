@@ -21,7 +21,7 @@ jobs:
       run: docker run --rm ccrsfifx/cellranger:7.2.0 cellranger --version
 
     - name: Validate version consistency
-         run: |
+      run: |
           # Extract the expected version from the 'cellranger --version' output
           CELLRANGER_VERSION=$(docker run ccrsfifx/cellranger:7.2.0 cellranger --version | awk '{print $2}')
 
