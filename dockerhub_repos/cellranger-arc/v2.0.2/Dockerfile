@@ -25,3 +25,7 @@ RUN \
     export PATH=/opt/cellranger-arc-$CELLRANGERARC_VER:$PATH && \
     ln -s /opt/cellranger-arc-$CELLRANGERARC_VER/cellranger-arc /usr/bin/cellranger-arc && \
     rm -rf /opt/cellranger-arc-$CELLRANGERARC_VER.tar.gz
+
+#sudo docker build -t cellranger-arc -f Dockerfile .
+#docker tag cellranger-arc:latest ccrsfifx/cellranger-arc:2.0.2
+#docker push ccrsfifx/cellranger-arc:2.0.2
