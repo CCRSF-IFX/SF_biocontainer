@@ -1,0 +1,34 @@
+name: Test Cellranger Version
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'dockerhub_repos/cellranger-arc/v2.0.2/Dockerfile'
+
+jobs:
+  test_cellranger_version:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Pull Docker image
+      run: docker pull ccrsfifx/cellranger-arc:2.0.2
+      
+    - name: Run container and check cellranger-arc version
+      run: docker run --rm ccrsfifx/cellranger-arc-arc:2.0.2 cellranger-arc-arc --version
+
+    - name: Validate version consistency
+      run: |
+          # Extract the expected version from the 'cellranger-arc --version' output
+          CELLRANGER_VERSION=$(docker run ccrsfifx/cellranger-arc:2.0.2 cellranger-arc --version | awk '{print $2}')
+
+          # Compare with the Docker Hub tag
+          if [[ "$CELLRANGER_VERSION" != "cellranger-arc-2.0.2" ]]; then
+            echo "Error: Cell Ranger version ($CELLRANGER_VERSION) doesn't match Docker Hub tag (${{ steps.tag-info.outputs.tag }})"
+            exit 1
+          else
+            echo "Cell Ranger version matches Docker Hub tag."
+          fi
