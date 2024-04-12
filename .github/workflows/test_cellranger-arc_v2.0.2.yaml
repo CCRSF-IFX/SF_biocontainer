@@ -1,4 +1,4 @@
-name: Test Cellranger Version
+name: Test Cellranger-ARC Version
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       run: docker pull ccrsfifx/cellranger-arc:2.0.2
       
     - name: Run container and check cellranger-arc version
-      run: docker run --rm ccrsfifx/cellranger-arc-arc:2.0.2 cellranger-arc-arc --version
+      run: docker run --rm ccrsfifx/cellranger-arc:2.0.2 cellranger-arc --version
 
     - name: Validate version consistency
       run: |
