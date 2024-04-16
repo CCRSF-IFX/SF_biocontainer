@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'dockerhub_repos/spaceranger/'
+      - 'dockerhub_repos/spaceranger/**'
 
 jobs:
   test_cellranger_version:
