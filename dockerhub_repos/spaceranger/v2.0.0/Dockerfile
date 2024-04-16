@@ -1,4 +1,4 @@
-# Dockerfile to create container with Space Ranger v3.0.0
+# Dockerfile to create container with Space Ranger v2.0.0
 
 FROM docker.io/continuumio/miniconda3:22.11.1
 LABEL authors="Shaoun Xie <xies4@nih.gov>" \
