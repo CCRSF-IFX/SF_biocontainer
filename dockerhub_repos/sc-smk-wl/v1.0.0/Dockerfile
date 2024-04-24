@@ -90,6 +90,8 @@ RUN apt-get install -y samtools
 RUN pip3 install jupyterlab==4.1.1
 RUN R -e 'devtools::install_version("IRkernel", version = "1.1.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'IRkernel::installspec(name = "R", displayname = "R", user = FALSE)'
+RUN R -e 'devtools::install_version("optparse", version = "1.7.5", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
+RUN R -e 'devtools::install_version("glmGamPoi", version="1.14.3", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("glmGamPoi" %in% installed.packages()[,"Package"])'
 
 USER root
 
@@ -113,6 +115,8 @@ WORKDIR /home/docker/
 ## docker push ccrsfifx/sc-smk-wl:r1.0.0
 
 ## For test
+## docker run -p 8888:8888 -v /Volumes/:/Volumes/ -t -d --name Renv sc-smk-wl:latest
+## docker exec -it Renv bash 
 ## docker run -e PASSWORD=password -e USERID=$(id -u)  -d scrna.sc20230928:latest
 ## The command above will generate an ID. 
 ## docker container ls
