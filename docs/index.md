@@ -7,7 +7,7 @@ SF_biocontainer is a github repo with the Dockerfile used to build containers fo
 
 ### Publicly available images
 
-Many of the popular tools have been containerized by the community, including Biocontainer community and different institutes. These resournces can be found either on Docker hub or [Quay](https://quay.io/organization/biocontainers)
+Many of the popular tools have been containerized by the community, including Biocontainer community and different institutes. These resources can be found either on Docker hub or [Quay](https://quay.io/organization/biocontainers)
 
 ### CCRSF maintained images
 
