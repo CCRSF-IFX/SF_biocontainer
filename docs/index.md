@@ -13,7 +13,7 @@ Many of the popular tools have been containerized by the community, including Bi
 
 If the tool we want to use is not containerized before, we can build the container outself and deposite the image on Docker hub: 
 
-!()[containerization.png]
+![](containerization.png)
 
 ## Docker hub link for CCRSF-IFX 
 
