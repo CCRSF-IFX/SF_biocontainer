@@ -11,10 +11,9 @@ Many of the popular tools have been containerized by the community, including Bi
 
 ### CCRSF maintained images
 
-If the tool we want to use is not containerized before, we can build the container ourselves and deposite the image on Docker hub: 
+If the tool we want to use is not containerized before, we can build the container ourselves and deposite the image on Docker hub. Here is a diagram to show the current workflow used for containerization:  
 
 ![](containerization.png)
 
-## Docker hub link for CCRSF-IFX 
 CCRSFIFX maintained images can be found [here](https://hub.docker.com/repositories/ccrsfifx). 
 
