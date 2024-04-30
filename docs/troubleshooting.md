@@ -12,4 +12,13 @@ Singularity also uses some temporary directories to build the squashfs filesyste
 
 In many HPC platform, limited space is assigned to `$HOME`. So to make the pipeline more robust, it is recommended to set `SINGULARITY_CACHEDIR` to make sure enough space can be used. 
 
+## Issue with NIH VPN 
+
+When the program inside a container needs to connect to a database via API or download some data, the error message below might be threwn out:
+
+> SSL certificate problem: self signed certificate in certificate chain
+
+This is related to VPN setting. Disabling VPN solved the issue. Detailed reason not sure. 
+
+
  
