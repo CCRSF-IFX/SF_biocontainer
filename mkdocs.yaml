@@ -1,0 +1,38 @@
+# Project Information
+site_name: SF_biocontainer Documentation
+site_author: CCRSFIFX
+site_description: >-
+  SF_biocontainer is a github repo with the Dockerfile used to build containers for CCRSF pipelines.  
+
+# Repository
+repo_name: CCRSF-IFX/SF_biocontainer
+repo_url: https://github.com/CCRSF-IFX/SF_biocontainer.git 
+edit_uri: https://github.com/CCRSF-IFX/SF_biocontainer/edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2024 CCRSFIFX
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - rust
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/CCRSF-IFX
+
+# Page Tree
+nav:
+  - Introduction:
+      - About: index.md
+      - Design: design.md
+  - Usage:
+      - Snakemake/Singularity: pipeline_containerization.md
+  - FAQ:
+      - General Questions: general-questions.md
+      - Troubleshooting: troubleshooting.md
+  - License: license.md
