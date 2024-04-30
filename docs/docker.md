@@ -36,6 +36,7 @@ Because the image above is built for processing single cell RNA-seq data, we inc
 Seurat
 SingleR
 celldex
+scater
 etc
 ```
 
