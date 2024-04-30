@@ -27,9 +27,10 @@ extra:
 
 # Page Tree
 nav:
-  - Introduction:
-      - About: index.md
-      - Design: design.md
+  - Intronduction:
+      - Containerization: index.md
+      - Container building: docker.md
+      
   - Usage:
       - Snakemake/Singularity: pipeline_containerization.md
   - FAQ:
