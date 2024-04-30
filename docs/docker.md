@@ -12,8 +12,10 @@ docker login -u ccrsfifx
 docker build
 docker tag
 docker push
+docker run 
+docker images
+docker container ls
 ```
-
 
 ### An example of building customized container/image for single cell data
 
