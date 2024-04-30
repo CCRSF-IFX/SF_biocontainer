@@ -92,7 +92,16 @@ RUN R -e 'devtools::install_version("IRkernel", version = "1.1.1", repos = "http
 RUN R -e 'IRkernel::installspec(name = "R", displayname = "R", user = FALSE)'
 RUN R -e 'devtools::install_version("optparse", version = "1.7.5", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_version("glmGamPoi", version="1.14.3", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("glmGamPoi" %in% installed.packages()[,"Package"])'
-
+RUN R -e 'devtools::install_github("immunogenomics/presto@7636b3d0465c468c35853f82f1717d3a64b3c8f6");stopifnot("presto" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("ExperimentHub", version="2.10.0", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("ExperimentHub" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("AnnotationHub", version="3.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationHub" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("AnnotationDbi", version="1.64.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationDbi" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("celldex", version="1.12.0", repos=c("https://bioconductor.org/packages/3.18/data/experiment"),upgrade = "never", force = TRUE); stopifnot("celldex" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("scater", version="1.30.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("scater" %in% installed.packages()[,"Package"])'
+RUN pip3 install Jinja2==3.1.3
+#RUN apt-get install ca-certificates -y && \
+#   update-ca-certificates
+#RUN echo "insecure" >  $HOME/.curlrc
 USER root
 
 RUN rm -rf /usr/bin/pip /usr/bin/python && \
@@ -107,6 +116,8 @@ RUN R -e 'ip = as.data.frame(installed.packages()[,c(1,3:4)]); ip = ip[is.na(ip$
 RUN useradd -s /bin/bash docker
 USER docker
 WORKDIR /home/docker/
+RUN R -e 'library(celldex); setwd("/home/docker/");saveRDS(HumanPrimaryCellAtlasData(), file = "HumanPrimaryCellAtlasData.rds"); saveRDS(BlueprintEncodeData(), "BlueprintEncodeData.rds"); saveRDS(ImmGenData(), "ImmGenData.rds"); saveRDS(MouseRNAseqData(), "MouseRNAseqData.rds")'
+
 #ENTRYPOINT ["/usr/bin/docker_helper.0.1.0"]
 
 ########################################################################
