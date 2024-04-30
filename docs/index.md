@@ -11,7 +11,7 @@ Many of the popular tools have been containerized by the community, including Bi
 
 ### CCRSF maintained images
 
-If the tool we want to use is not containerized before, we can build the container outself and deposite the image on Docker hub: 
+If the tool we want to use is not containerized before, we can build the container ourselves and deposite the image on Docker hub: 
 
 ![](containerization.png)
 
