@@ -2,10 +2,6 @@
 
 SF_biocontainer is a github repo with the Dockerfile used to build containers for CCRSF pipelines.
 
-## Docker hub link: 
-
-https://hub.docker.com/repositories/ccrsfifx
-
 
 ## Containerization 
 
@@ -18,4 +14,8 @@ Many of the popular tools have been containerized by the community, including Bi
 If the tool we want to use is not containerized before, we can build the container outself and deposite the image on Docker hub: 
 
 !()[containerization.png]
+
+## Docker hub link for CCRSF-IFX 
+
+https://hub.docker.com/repositories/ccrsfifx
 
