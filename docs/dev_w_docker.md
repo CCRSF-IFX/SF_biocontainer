@@ -25,17 +25,16 @@ system(paste0('Rscript ', script_path,                # %exclude_jupyterlab%
 
 3. Write the main code
 
-First, read the options using readRDS: 
+After capturing the options, read them using `readRDS()` and proceed with the main code: 
 
 ```
 opt = readRDS("/Volumes/ccrsf-static/Analysis/xies4/github_repos/pipeline_dev_test/singleR/opt.rds")         # %exclude_jupyterlab%
+# main code  goes here
 ```
-
-Then include the code to accomplish the task. 
 
 4. Generate production script: `sc_singleR.prod.R`
 
-The code below will first convert the `ipynb` file to a script file and combine the script for option `sc_singleR_opt.R` and `sc_singleR.r` (output file of `jupyter nbconvert -`) with exclusion of the lines with "exclude_jupyterlab". 
+Combine the necessary scripts and exclude irrelevant lines marked with `exclude_jupyterlab` to create the production script:
 
 ```
 notebook_prefix = "sc_singleR"                                                         # %exclude_jupyterlab%
