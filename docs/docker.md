@@ -1,10 +1,10 @@
-## Building container/image using Docker 
+## Create images using Docker 
 
 Docker is not available on FRCE (or any HPC) for a user because docker requires sudo permission. 
 
 But we can run use docker on our own laptop or VM in which we have been granted the root access. 
 
-Common command lines used to build and test the container:
+Common command lines used to create and test an image:
 
 ```
 ## passwd is the same as FRCE password
@@ -17,9 +17,9 @@ docker images
 docker container ls
 ```
 
-### An example of building customized container/image for single cell data
+### An example of creating customized image for single cell data
 
-Command liens for building and pushing images to Docker hub
+Command lines for creating and pushing images to Docker hub
 ```
 docker build -t sc-smk-wl -f Dockerfile .
 docker tag sc-smk-wl:latest ccrsfifx/sc-smk-wl:r1.0.0
