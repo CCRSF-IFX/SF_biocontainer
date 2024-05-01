@@ -1,21 +1,28 @@
-# Use the container in Snakemake pipeline
+# Usecontainer in Snakemake pipeline
 
 To use container in the snakemake pipeline, we can define a container for each rule to use: 
 
 ```
-rule NAME:
+rule seurat_proc:
     input:
-        "table.txt"
+        h5 = rules.count.output 
+    params:
+        fil_mtx = os.path.join(analysis, "{sample}/outs/filtered_feature_bc_matrix/"),
+        outdir = os.path.join(analysis, "{sample}/seurat/"),
+    log:
+        os.path.join(analysis, "{sample}/seurat/seurat.log")
     output:
-        "plots/myplot.pdf"
+        seur = os.path.join(analysis, "{sample}/seurat/seur_10x_cluster_object.rds")
     container:
-        "docker://joseespinosa/docker-r-ggplot2"
-    script:
-        "scripts/plot-stuff.R"
+        "docker://ccrsfifx/sc-smk-wl:r1.0.0"
+    shell:
+        """
+Rscript {analysis}/workflow/scripts/rna/sc_seurat.prod.R --genome={config.ref} --data.dir={params.fil_mtx}  --outdir={params.outdir} > {log} 2>&1
+"""
 ```
 
 
-The configuration for singularity can be found in `profile/slurm/config.v8+.yaml`: 
+The configuration of snakemake command for singularity can be found in `profile/slurm/config.v8+.yaml`: 
 
 ```
 use-singularity: True
