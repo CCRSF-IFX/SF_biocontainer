@@ -1,9 +1,9 @@
-To develop R scripts for single cell sequencing data, docker container can be used. In the docker container, development can be finished using jupyter-lab. 
+When developing R scripts for single-cell sequencing data analysis, utilizing Docker containers offers a streamlined and reproducible environment. This documentation outlines the process of developing R scripts within a Docker container, leveraging JupyterLab for efficient coding and visualization.
 
 If the goal is to develop an R script named `sc_singleR.prod.R`, we create two files: 
 ```
-sc_seurat_opt.R
-sc_singleR.ipynb
+sc_seurat_opt.R   # https://github.com/CCRSF-IFX/SF_sc-smk-wl/blob/main/scripts/rna/sc_singleR_opt.R
+sc_singleR.ipynb  # https://github.com/CCRSF-IFX/SF_sc-smk-wl/blob/main/scripts/rna/sc_singleR.ipynb
 ```
 
 1. Record the script path:
