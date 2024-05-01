@@ -29,10 +29,11 @@ extra:
 nav:
   - Intronduction:
       - Containerization: index.md
-      - Container building: docker.md
+      - Create image/container: docker.md
       
-  - Usage:
-      - Snakemake/Singularity: pipeline_containerization.md
+  - Usage in Snakemake pipeline:
+      - Snakemake pipeline with Singularity: pipeline_containerization.md
+
   - FAQ:
       - General Questions: general-questions.md
       - Troubleshooting: troubleshooting.md
