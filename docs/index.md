@@ -1,6 +1,6 @@
 # SF_biocontainer
 
-SF_biocontainer is a github repo with the Dockerfile used to build containers for CCRSF pipelines.
+[SF_biocontainer](https://github.com/CCRSF-IFX/SF_biocontainer.git) is a github repo with the Dockerfile used to build containers for CCRSF pipelines.
 
 
 ### Publicly available images
