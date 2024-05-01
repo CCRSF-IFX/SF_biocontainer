@@ -1,4 +1,4 @@
-The configuration of snakemake command for singularity is recommended to set up in `profile/slurm/config.v8+.yaml`: 
+The configuration of snakemake command for singularity is recommended to be set up in `profile/slurm/config.v8+.yaml`: 
 
 ```
 use-singularity: True
