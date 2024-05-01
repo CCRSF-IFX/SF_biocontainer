@@ -20,11 +20,6 @@ VMs are great at providing full process isolation for applications: there are ve
 
 Containers take a different approach: by leveraging the low-level mechanics of the host operating system, containers provide most of the isolation of virtual machines at a fraction of the computing power.
 
-## Reference
-
-Containers in Bioinformatics: Applications, Practical Considerations, and Best Practices in Molecular Pathology: [link](https://www.sciencedirect.com/science/article/pii/S1525157822000381?via%3Dihub)
-
-Docker for beginners: [link](https://docker-curriculum.com/)
 
 
 
