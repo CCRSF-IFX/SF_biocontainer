@@ -26,7 +26,7 @@ docker tag sc-smk-wl:latest ccrsfifx/sc-smk-wl:r1.0.0
 docker push ccrsfifx/sc-smk-wl:r1.0.0
 ```
 
-To test the container, we can create a container using the image we have built above: 
+To test the image, we can create a container using the image we have built above: 
 ```
 docker run -p 8888:8888 -v /Volumes/:/Volumes/ -t -d --name Renv sc-smk-wl:latest
 ```
