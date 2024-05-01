@@ -22,9 +22,9 @@ Containers take a different approach: by leveraging the low-level mechanics of t
 
 ## Reference
 
-Containers in Bioinformatics: Applications, Practical Considerations, and Best Practices in Molecular Pathology: https://www.sciencedirect.com/science/article/pii/S1525157822000381?via%3Dihub
+Containers in Bioinformatics: Applications, Practical Considerations, and Best Practices in Molecular Pathology: [link](https://www.sciencedirect.com/science/article/pii/S1525157822000381?via%3Dihub)
 
-Docker for beginners: https://docker-curriculum.com/
+Docker for beginners: [link](https://docker-curriculum.com/)
 
 
 
