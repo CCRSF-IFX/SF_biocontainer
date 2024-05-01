@@ -34,7 +34,7 @@ nav:
   - Containerization for Snakemake pipeline:
       - Build Snakemake pipeline with Singularity: pipeline_containerization.md
       - Snakemake options for containerization: snakemake_opt4singularity.md 
-
+      - Develop R scripts in the container: dev_w_docker.md
   - FAQ:
       - General Questions: general-questions.md
       - Troubleshooting: troubleshooting.md
