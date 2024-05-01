@@ -31,7 +31,7 @@ nav:
       - Containerization: index.md
       - Create image/container: docker.md
       
-  - Usage in Snakemake pipeline:
+  - Containerization for Snakemake pipeline:
       - Build Snakemake pipeline with Singularity: pipeline_containerization.md
       - Snakemake options for containerization: snakemake_opt4singularity.md 
 
