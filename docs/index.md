@@ -13,5 +13,5 @@ If the tool we want to use is not containerized before, we can build the contain
 
 ![](containerization.png)
 
-CCRSFIFX maintained images can be found [here](https://hub.docker.com/repositories/ccrsfifx). 
+CCRSFIFX maintained images can be found [here](https://hub.docker.com/u/ccrsfifx)
 
