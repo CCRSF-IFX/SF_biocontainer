@@ -40,6 +40,9 @@ scater
 etc
 ```
 
+A full list of packages installed can be found here: 
+https://github.com/CCRSF-IFX/SF_biocontainer/blob/main/dockerhub_repos/sc-smk-wl/vr1.0.0/Dockerfile 
+
 Then we can aunch a Bash shell inside the container:
 ```
 docker exec -it Renv bash 
