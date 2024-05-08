@@ -4,6 +4,7 @@ Here we use Seurat analysis as an example.
 Step 1: Build an image file using Singularity: 
 
 ```
+module load singularity 
 singularity build r_env_v1.0.0.sif docker://ccrsfifx/sc-smk-wl:r1.0.0
 ```
 
