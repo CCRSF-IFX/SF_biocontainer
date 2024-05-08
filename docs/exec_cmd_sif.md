@@ -23,5 +23,7 @@ singularity exec  \
     Rscript sc_seurat.prod.R  --genome=hg38 --data.dir=<absolute_path2mtx> --outdir=<outdir>
 ```
 
+Based on the paths of input and output files, you may want to include additional bindings.  
 
+To run SingleR script, you can modify the command line above to include the corresponding script and options. 
 
