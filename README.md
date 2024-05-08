@@ -1,5 +1,5 @@
 # SF_biocontainer
 
-Find the documentation here: https://fuzzy-doodle-n8mmn9v.pages.github.io/
+Find the documentation here: https://ccrsf-ifx.github.io/SF_biocontainer/
 
 
