@@ -12,6 +12,7 @@ RUN R -e 'install.packages("pkgbuild")'
 RUN R -e 'devtools::install_version("dplyr", version = "1.1.4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)' 
 RUN R -e 'devtools::install_version("Seurat", version = "5.0.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)' 
 RUN R -e 'devtools::install_version("clusterProfiler", version="4.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)' 
+RUN R -e 'devtools::install_version("SingleR", version="2.4.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_version("celda", version="1.18.2", repos=c("https://bioconductor.org/packages/3.18/bioc", "https://bioconductor.org/packages/devel/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_version("GSVA", version="1.50.2", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_version("org.Hs.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE)'
@@ -37,7 +38,15 @@ RUN R -e 'devtools::install_version("SummarizedExperiment", version="1.32.0", re
 RUN R -e 'devtools::install_version("SingleCellExperiment", version="1.24.0", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("SingleCellExperiment" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("destiny", version="3.16.0", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("destiny" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_github(repo="farrellja/URD@0fed8b824644288ba4ec405ddf82a36960e2d4f9");stopifnot("URD" %in% installed.packages()[,"Package"])'
- 
+RUN R -e 'devtools::install_version("optparse", version = "1.7.5", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
+RUN R -e 'devtools::install_version("glmGamPoi", version="1.14.3", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("glmGamPoi" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_github("immunogenomics/presto@7636b3d0465c468c35853f82f1717d3a64b3c8f6");stopifnot("presto" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("ExperimentHub", version="2.10.0", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("ExperimentHub" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("AnnotationHub", version="3.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationHub" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("AnnotationDbi", version="1.64.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationDbi" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("celldex", version="1.12.0", repos=c("https://bioconductor.org/packages/3.18/data/experiment"),upgrade = "never", force = TRUE); stopifnot("celldex" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("scater", version="1.30.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("scater" %in% installed.packages()[,"Package"])'
+
 RUN apt-get update && \ 
     apt-get install -y apt-utils \ 
                        libudunits2-dev \ 
@@ -82,25 +91,14 @@ RUN pip3 install --upgrade pip && \
     pip3 install rpy2==3.5.4 && \
     python3 -m rpy2.situation LD_LIBRARY_PATH && \
     pip3 install scvelo==0.2.5 && \
-   pip3 install matplotlib==3.5.1  
+    pip3 install matplotlib==3.5.1  
 
 RUN apt-get install -y samtools
 
 RUN pip3 install jupyterlab==4.1.1
 RUN R -e 'devtools::install_version("IRkernel", version = "1.1.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'IRkernel::installspec(name = "R", displayname = "R", user = FALSE)'
-RUN R -e 'devtools::install_version("optparse", version = "1.7.5", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
-RUN R -e 'devtools::install_version("glmGamPoi", version="1.14.3", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("glmGamPoi" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_github("immunogenomics/presto@7636b3d0465c468c35853f82f1717d3a64b3c8f6");stopifnot("presto" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_version("ExperimentHub", version="2.10.0", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("ExperimentHub" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_version("AnnotationHub", version="3.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationHub" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_version("AnnotationDbi", version="1.64.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationDbi" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_version("celldex", version="1.12.0", repos=c("https://bioconductor.org/packages/3.18/data/experiment"),upgrade = "never", force = TRUE); stopifnot("celldex" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_version("scater", version="1.30.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("scater" %in% installed.packages()[,"Package"])'
 RUN pip3 install Jinja2==3.1.3
-#RUN apt-get install ca-certificates -y && \
-#   update-ca-certificates
-#RUN echo "insecure" >  $HOME/.curlrc
 USER root
 
 RUN rm -rf /usr/bin/pip /usr/bin/python && \
