@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'dockerhub_repos/cellranger-atac/**'
-
+      - '.github/workflows/test_cellranger_atac.yaml'
 jobs:
   test_cellranger_version:
     runs-on: ubuntu-latest
@@ -19,8 +19,8 @@ jobs:
           # Extract the expected version from the 'spaceranger --version' output
           VERSION=$(docker run ccrsfifx/cellranger-atac:2.1.0 cellranger-atac --version | awk '{print $2}')
           # Compare with the Docker Hub tag
-          if [[ "$VERSIONV" != "cellranger-atac-2.1.0" ]]; then
-            echo "Error: Cellranger-atac version ($VERSIONV) doesn't match Docker Hub tag (${{ steps.tag-info.outputs.tag }})"
+          if [[ "$VERSION" != "cellranger-atac-2.1.0" ]]; then
+            echo "Error: Cellranger-atac version ($VERSION) doesn't match Docker Hub tag (${{ steps.tag-info.outputs.tag }})"
             exit 1
           else
             echo "Cellranger-atac version matches Docker Hub tag."
