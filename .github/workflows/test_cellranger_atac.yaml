@@ -1,4 +1,4 @@
-name: Test Spaceranger Version
+name: Test Cellranger atac Version
 
 on:
   push:
