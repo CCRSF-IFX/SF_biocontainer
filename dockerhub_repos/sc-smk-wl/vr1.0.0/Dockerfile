@@ -11,15 +11,8 @@ RUN R -e 'install.packages("devtools")'
 RUN R -e 'install.packages("pkgbuild")' 
 RUN R -e 'devtools::install_version("dplyr", version = "1.1.4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)' 
 RUN R -e 'devtools::install_version("Seurat", version = "5.0.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)' 
-RUN R -e 'devtools::install_version("clusterProfiler", version="4.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)' 
-RUN R -e 'devtools::install_version("SingleR", version="2.4.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
-RUN R -e 'devtools::install_version("celda", version="1.18.2", repos=c("https://bioconductor.org/packages/3.18/bioc", "https://bioconductor.org/packages/devel/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
-RUN R -e 'devtools::install_version("GSVA", version="1.50.2", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_version("org.Hs.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_version("org.Mm.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE)'
-RUN R -e 'devtools::install_version("ReactomeGSA", version="1.16.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE)'
-#TeachingDemos
-RUN R -e 'devtools::install_version("TeachingDemos", version = "2.13", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 #markdown
 RUN R -e 'devtools::install_version("markdown", version = "1.12", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_github("BaderLab/scClustViz@6707c89589c1793ebb7e042d40ce80331e96fe6e");stopifnot("scClustViz" %in% installed.packages()[,"Package"])' 
@@ -44,8 +37,22 @@ RUN R -e 'devtools::install_github("immunogenomics/presto@7636b3d0465c468c35853f
 RUN R -e 'devtools::install_version("ExperimentHub", version="2.10.0", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("ExperimentHub" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("AnnotationHub", version="3.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationHub" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("AnnotationDbi", version="1.64.1", repos=c("https://bioconductor.org/packages/3.18/bioc","http://cran.us.r-project.org"),upgrade = "never", force = TRUE); stopifnot("AnnotationDbi" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("rsvd", version = "1.0.5", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("rsvd" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("SingleR", version="2.4.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE);stopifnot("SingleR" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("celldex", version="1.12.0", repos=c("https://bioconductor.org/packages/3.18/data/experiment"),upgrade = "never", force = TRUE); stopifnot("celldex" %in% installed.packages()[,"Package"])'
-RUN R -e 'devtools::install_version("scater", version="1.30.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("scater" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("ape", version = "5.8", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("ape" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("tidytree", version = "0.4.6", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("tidytree" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("fastmatch", version = "1.1-4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("fastmatch" %in% installed.packages()[,"Package"])'
+#‘aplot’, ‘ggfun’, ‘ggnewscale’, ‘scatterpie’, ‘shadowtext’, ‘ggtree’ 
+RUN R -e 'devtools::install_version("aplot", version = "0.2.2", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("aplot" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("ggfun", version = "0.1.5", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("ggfun" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("ggnewscale", version = "0.4.10", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("ggnewscale" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("scatterpie", version = "0.2.3", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("scatterpie" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("shadowtext", version = "0.1.3", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("shadowtext" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("ggtree", version="3.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("ggtree" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("downloader", version = "0.4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("downloader" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("gson", version = "0.1.0", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("gson" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("clusterProfiler", version="4.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("clusterProfiler" %in% installed.packages()[,"Package"])'
 
 RUN apt-get update && \ 
     apt-get install -y apt-utils \ 
@@ -98,7 +105,7 @@ RUN apt-get install -y samtools
 RUN pip3 install jupyterlab==4.1.1
 RUN R -e 'devtools::install_version("IRkernel", version = "1.1.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'IRkernel::installspec(name = "R", displayname = "R", user = FALSE)'
-RUN pip3 install Jinja2==3.1.3
+RUN R -e 'devtools::install_version("dbplyr", version = "2.3.4")'
 USER root
 
 RUN rm -rf /usr/bin/pip /usr/bin/python && \
