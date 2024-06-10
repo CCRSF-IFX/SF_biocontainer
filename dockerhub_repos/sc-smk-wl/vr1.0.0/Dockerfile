@@ -11,8 +11,6 @@ RUN R -e 'install.packages("devtools")'
 RUN R -e 'install.packages("pkgbuild")' 
 RUN R -e 'devtools::install_version("dplyr", version = "1.1.4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)' 
 RUN R -e 'devtools::install_version("Seurat", version = "5.0.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)' 
-RUN R -e 'devtools::install_version("org.Hs.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE)'
-RUN R -e 'devtools::install_version("org.Mm.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE)'
 #markdown
 RUN R -e 'devtools::install_version("markdown", version = "1.12", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_github("BaderLab/scClustViz@6707c89589c1793ebb7e042d40ce80331e96fe6e");stopifnot("scClustViz" %in% installed.packages()[,"Package"])' 
@@ -53,6 +51,8 @@ RUN R -e 'devtools::install_version("ggtree", version="3.10.1", repos=c("https:/
 RUN R -e 'devtools::install_version("downloader", version = "0.4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("downloader" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("gson", version = "0.1.0", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("gson" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("clusterProfiler", version="4.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("clusterProfiler" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("org.Hs.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE); stopifnot("org.Hs.eg.db" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_version("org.Mm.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE); stopifnot("org.Mm.eg.db" %in% installed.packages()[,"Package"])'
 
 RUN apt-get update && \ 
     apt-get install -y apt-utils \ 
