@@ -37,5 +37,8 @@ When the program inside a container needs to connect to a database via API or do
 
 This is related to VPN setting. Disabling VPN solved the issue. Detailed reason not sure. 
 
+## Issue with internal connection
 
+
+[](screenshot_SSLcert.png)
  
