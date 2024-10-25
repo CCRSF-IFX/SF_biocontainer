@@ -53,6 +53,7 @@ RUN R -e 'devtools::install_version("gson", version = "0.1.0", repos = "https://
 RUN R -e 'devtools::install_version("clusterProfiler", version="4.10.1", repos=c("https://bioconductor.org/packages/3.18/bioc"),upgrade = "never", force = TRUE); stopifnot("clusterProfiler" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("org.Hs.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE); stopifnot("org.Hs.eg.db" %in% installed.packages()[,"Package"])'
 RUN R -e 'devtools::install_version("org.Mm.eg.db", version="3.18.0", repos="https://bioconductor.org/packages/3.18/data/annotation", upgrade = "never", force = TRUE); stopifnot("org.Mm.eg.db" %in% installed.packages()[,"Package"])'
+RUN R -e 'devtools::install_github("YuLab-SMU/createKEGGdb@c7f6308");stopifnot("createKEGGdb" %in% installed.packages()[,"Package"])'
 
 RUN apt-get update && \ 
     apt-get install -y apt-utils \ 
@@ -90,6 +91,11 @@ RUN apt-get update && \
                        xvfb \ 
                        xauth \ 
                        xfonts-base 
+#RUN apt-get install -y ca-certificates
+# cp /usr/local/share/ca-certificates/cacert.pem  ./
+#COPY cacert.pem /usr/local/share/ca-certificates
+#RUN update-ca-certificates
+
 RUN pip3 install --upgrade pip && \
     pip3 install Cython==3.0.6 && \
     pip3 install velocyto==0.17.16 && \
@@ -116,12 +122,12 @@ RUN rm -rf /usr/bin/pip /usr/bin/python && \
 ## List of user-installed R packages and their versions
 ## https://stackoverflow.com/a/40120266/3327344
 RUN R -e 'ip = as.data.frame(installed.packages()[,c(1,3:4)]); ip = ip[is.na(ip$Priority),1:2,drop=FALSE];ip'
+RUN R -e 'library(createKEGGdb);species <-c("mmu","hsa");create_kegg_db(species);install.packages("./KEGG.db_1.0.tar.gz", repos=NULL)'
 
 RUN useradd -s /bin/bash docker
 USER docker
 WORKDIR /home/docker/
 RUN R -e 'library(celldex); setwd("/home/docker/");saveRDS(HumanPrimaryCellAtlasData(), file = "HumanPrimaryCellAtlasData.rds"); saveRDS(BlueprintEncodeData(), "BlueprintEncodeData.rds"); saveRDS(ImmGenData(), "ImmGenData.rds"); saveRDS(MouseRNAseqData(), "MouseRNAseqData.rds")'
-
 #ENTRYPOINT ["/usr/bin/docker_helper.0.1.0"]
 
 ########################################################################
