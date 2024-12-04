@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="CCRSFIFX" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Develop R scripts in the container - SF_biocontainer Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Develop R scripts in the container";
+        var mkdocs_page_input_path = "dev_w_docker.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/rust.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> SF_biocontainer Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Intronduction</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="..">Containerization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docker/">Create image/container</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Containerization for Snakemake pipeline</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../pipeline_containerization/">Build Snakemake pipeline with Singularity</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../snakemake_opt4singularity/">Snakemake options for containerization</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Develop R scripts in the container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exec_cmd_sif/">Run command lines using the container outside snakemake pipeline using Singularity</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">FAQ</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../general-questions/">General Questions</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ref/">Reference</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SF_biocontainer Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Containerization for Snakemake pipeline</li>
+      <li class="breadcrumb-item active">Develop R scripts in the container</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/CCRSF-IFX/SF_biocontainer/edit/main/docs/dev_w_docker.md">Edit on CCRSF-IFX/SF_biocontainer</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>When developing R scripts for single-cell sequencing data analysis, utilizing Docker containers offers a streamlined and reproducible environment. This documentation outlines the process of developing R scripts within a Docker container, leveraging JupyterLab for efficient coding and visualization.</p>
+<p>If the goal is to develop an R script named <code>sc_singleR.prod.R</code>, we create two files: </p>
+<pre><code>sc_seurat_opt.R   # https://github.com/CCRSF-IFX/SF_sc-smk-wl/blob/main/scripts/rna/sc_singleR_opt.R
+sc_singleR.ipynb  # https://github.com/CCRSF-IFX/SF_sc-smk-wl/blob/main/scripts/rna/sc_singleR.ipynb
+</code></pre>
+<ol>
+<li>Record the script path:</li>
+</ol>
+<pre><code>script_path = getwd()                                # %exclude_jupyterlab%
+script_path                                          # %exclude_jupyterlab%
+</code></pre>
+<ol>
+<li>Invoke <code>sc_singleR_opt.R</code> for command line options </li>
+</ol>
+<p>Inside the notebook, we use the cell below to utilize <code>sc_seurat_opt.R</code> to read the command line options and save the information in an RDS file named <code>opt.rds</code>. </p>
+<pre><code>system(paste0('Rscript ', script_path,                # %exclude_jupyterlab%
+        '/sc_singleR_opt.R --genome=&quot;hg38&quot; --markerList=&quot;/Volumes/ccrsf-ifx/Software/scripts/bin/currentsnake/single_cell/gene_lists/human_gene_list.csv&quot; --outdir=&quot;/Volumes/ccrsf-static/Analysis/xies4/github_repos/pipeline_dev_test/singleR&quot; --rds=&quot;/Volumes/ccrsf-static/Analysis/xies4/github_repos/pipeline_dev_test/test_dir/seur_10x_cluster_object.rds&quot;'),  # %exclude_jupyterlab%
+       intern = T) # %exclude_jupyterlab%
+</code></pre>
+<ol>
+<li>Write the main code</li>
+</ol>
+<p>After capturing the options, read them using <code>readRDS()</code> and proceed with the main code: </p>
+<pre><code>opt = readRDS(&quot;/Volumes/ccrsf-static/Analysis/xies4/github_repos/pipeline_dev_test/singleR/opt.rds&quot;)         # %exclude_jupyterlab%
+# main code  goes here
+</code></pre>
+<ol>
+<li>Generate production script: <code>sc_singleR.prod.R</code></li>
+</ol>
+<p>Combine the necessary scripts and exclude irrelevant lines marked with <code>exclude_jupyterlab</code> to create the production script:</p>
+<pre><code>notebook_prefix = &quot;sc_singleR&quot;                                                         # %exclude_jupyterlab%
+notebook_name = paste0(notebook_prefix, &quot;.ipynb&quot;)                                     # %exclude_jupyterlab%
+notebook_r = paste0(script_path, &quot;/&quot;, paste0(notebook_prefix, &quot;.r&quot;))                  # %exclude_jupyterlab%
+notebook_path = paste0(script_path, &quot;/&quot;, notebook_name)                               # %exclude_jupyterlab%
+opt_name = paste0(script_path, &quot;/&quot;, sub(&quot;.ipynb&quot;, &quot;_opt.R&quot;, notebook_name))           # %exclude_jupyterlab%
+output = paste0(script_path, &quot;/&quot;, sub(&quot;.ipynb&quot;, &quot;.prod.R&quot;, notebook_name))            # %exclude_jupyterlab%
+cmd1 = paste0(&quot;jupyter nbconvert --to script --output &quot;,                              # %exclude_jupyterlab%
+             notebook_prefix, ' ', notebook_path, &quot;&gt; /dev/null 2&gt;&amp;1 &quot;)                # %exclude_jupyterlab%
+cmd1                                                                                  # %exclude_jupyterlab%
+system(cmd1, intern = TRUE)                                                            # %exclude_jupyterlab%
+cmd2 = paste0('cat ', opt_name, ' ', notebook_r,                                      # %exclude_jupyterlab%
+             ' |grep -v exclude_jupyterlab &gt; ', output,  ' 2&gt;&amp;1')                     # %exclude_jupyterlab%
+cmd2                                                                                  # %exclude_jupyterlab%
+system(cmd2, intern = T)                                                              # %exclude_jupyterlab%
+system(paste0(&quot;rm &quot;, notebook_r))                                                     # %exclude_jupyterlab%  
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../snakemake_opt4singularity/" class="btn btn-neutral float-left" title="Snakemake options for containerization"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../exec_cmd_sif/" class="btn btn-neutral float-right" title="Run command lines using the container outside snakemake pipeline using Singularity">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2024 CCRSFIFX</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/CCRSF-IFX/SF_biocontainer.git" class="fa fa-code-fork" style="color: #fcfcfc"> CCRSF-IFX/SF_biocontainer</a>
+        </span>
+    
+    
+      <span><a href="../snakemake_opt4singularity/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../exec_cmd_sif/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
