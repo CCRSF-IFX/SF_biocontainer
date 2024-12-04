@@ -7,17 +7,6 @@ MAINTAINER Shaojun Xie
 ENV DEBIAN_FRONTEND noninteractive
 COPY ./install_R_pkg.R ./ 
 RUN R -e 'source("install_R_pkg.R")'
-###RUN R -e 'install.packages("devtools")' 
-###RUN R -e 'install.packages("pkgbuild")' 
-####markdown
-###RUN R -e 'devtools::install_version("markdown", version = "1.12", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
-###RUN R -e 'devtools::install_version("knitr", version = "0.4", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("knitr" %in% installed.packages()[,"Package"])'
-###RUN R -e 'devtools::install_version("kableExtra", version = "1.4.0", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("kableExtra" %in% installed.packages()[,"Package"])'
-###RUN R -e 'devtools::install_version("stringr", version = "1.5.1", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE);stopifnot("stringr" %in% installed.packages()[,"Package"])'
-###
-##### List of user-installed R packages and their versions
-##### https://stackoverflow.com/a/40120266/3327344
-###RUN R -e 'ip = as.data.frame(installed.packages()[,c(1,3:4)]); ip = ip[is.na(ip$Priority),1:2,drop=FALSE];ip'
 
 RUN useradd -s /bin/bash docker
 USER docker
@@ -27,6 +16,11 @@ WORKDIR /home/docker/
 ########################################################################
 ## docker build -t sc-rmd-report -f Dockerfile .
 ## docker tag sc-rmd-report:latest ccrsfifx/sc-rmd-report:r1.0.0
+## docker login
+## user name: ccrsfifx
+## email: ccrsfifx@gmail.com
+## passwd: same as HPC passwd
+## create repo on docker hub 
 ## docker push ccrsfifx/sc-rmd-report:r1.0.0
 
 ## For test
