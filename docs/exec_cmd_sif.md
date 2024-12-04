@@ -13,7 +13,7 @@ The command line above will create a file named `r_env_v1.0.0.sif`. The suffix `
 Using the command line below, you can get the packages installed and the corresponding version information: 
 
 ```
-singularity build r_env_v1.0.0.sif R -e 'ip = as.data.frame(installed.packages()[,c(1,3:4)]); ip = ip[is.na(ip$Priority),1:2,drop=FALSE];ip'
+singularity exec r_env_v1.0.0.sif R -e 'ip = as.data.frame(installed.packages()[,c(1,3:4)]); ip = ip[is.na(ip$Priority),1:2,drop=FALSE];ip'
 ```
 
 Step 2: Run the command line 
