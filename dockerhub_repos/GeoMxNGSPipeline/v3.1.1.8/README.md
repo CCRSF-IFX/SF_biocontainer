@@ -8,6 +8,10 @@ https://nanostring.app.box.com/v/GeoMxNGSPipeline
 
 3. Unzip the zip file
 
+Comment out the lines starting with `systemctl`
+
+The logic is that `systemctl` used to set up GUI version. For us we only need CLI version. 
+
 4. Build docker image
 
 ```
