@@ -1,37 +1,71 @@
-name: Test Spaceranger Version
+name: Test Spaceranger Versions
 
 on:
   push:
     branches: [ main ]
     paths:
       - 'dockerhub_repos/spaceranger/**'
+  workflow_dispatch:
 
 jobs:
-  test_cellranger_version:
+  discover-versions:
     runs-on: ubuntu-latest
-    
+    outputs:
+      versions: ${{ steps.collect.outputs.versions }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      
-    - name: Pull Docker image
-      run: docker pull ccrsfifx/spaceranger:3.0.0
-      
-    - name: Run container and check spaceranger version
-      run: docker run --rm ccrsfifx/spaceranger:3.0.0 spaceranger --version
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Validate version consistency
-      run: |
-          # Extract the expected version from the 'spaceranger --version' output
-          SR_VERSIONV3_0_0=$(docker run ccrsfifx/spaceranger:3.0.0 spaceranger --version | awk '{print $2}')
-          SR_VERSIONV2_0_0=$(docker run ccrsfifx/spaceranger:2.0.0 spaceranger --version | awk '{print $2}')
-          # Compare with the Docker Hub tag
-          if [[ "$SR_VERSIONV3_0_0" != "spaceranger-3.0.0" ]]; then
-            echo "Error: Space Ranger version ($SR_VERSIONV3_0_0) doesn't match Docker Hub tag (${{ steps.tag-info.outputs.tag }})"
+      - name: Collect version folders
+        id: collect
+        shell: bash
+        run: |
+          set -euo pipefail
+          # List immediate subfolders (e.g., v2.0.0 v3.0.0 ...)
+          mapfile -t DIRS < <(find dockerhub_repos/spaceranger -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | sort -V)
+          # Turn into JSON array for matrix
+          printf -v JSON '%s' "$(printf '%s\n' "${DIRS[@]}" | jq -R -s -c 'split("\n")|map(select(length>0))')"
+          echo "Found version folders: $JSON"
+          echo "versions=$JSON" >> "$GITHUB_OUTPUT"
+
+  test-spaceranger:
+    needs: discover-versions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ fromJSON(needs.discover-versions.outputs.versions) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Derive Docker tag from folder
+        id: meta
+        run: |
+          # Folder names are like v3.0.0; Docker tags are 3.0.0 (strip leading 'v')
+          FOLDER="${{ matrix.version }}"
+          TAG="${FOLDER#v}"
+          echo "folder=$FOLDER" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "image=ccrsfifx/spaceranger:${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Pull image
+        run: docker pull ${{ steps.meta.outputs.image }}
+
+      - name: Check spaceranger --version matches tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE="${{ steps.meta.outputs.image }}"
+          EXPECTED="spaceranger-${{ steps.meta.outputs.tag }}"
+          # Capture version string (second field works for typical output "spaceranger-3.0.0")
+          OUTPUT="$(docker run --rm "$IMAGE" spaceranger --version)"
+          ACTUAL="$(awk '{print $2}' <<<"$OUTPUT")"
+          echo "Output: $OUTPUT"
+          echo "Parsed: $ACTUAL"
+          if [[ "$ACTUAL" != "$EXPECTED" ]]; then
+            echo "Error: spaceranger version ($ACTUAL) does not match Docker tag ($EXPECTED) for $IMAGE"
             exit 1
-          elif [[ "$SR_VERSIONV2_0_0" != "spaceranger-2.0.0" ]]; then	
-            echo "Error: Space Ranger version ($SR_VERSIONV2_0_0) doesn't match Docker Hub tag (${{ steps.tag-info.outputs.tag }})"
-            exit 1
-          else
-            echo "Space Ranger version matches Docker Hub tag."
           fi
+          echo "OK: $IMAGE matches ($EXPECTED)"
+
