@@ -37,16 +37,19 @@ jobs:
 
     - name: Validate version consistency
       run: |
-        # Extract the version from the 'cellranger --version' output
-        CELLRANGER_VERSION=$(docker run --rm ccrsfifx/cellranger:${{ matrix.version }} cellranger --version | awk '{print $2}')
+        # Extract the full version output from 'cellranger --version'
+        CELLRANGER_OUTPUT=$(docker run --rm ccrsfifx/cellranger:${{ matrix.version }} cellranger --version)
         
-        # Expected version format
-        EXPECTED_VERSION="cellranger-${{ matrix.version }}"
+        # Expected version formats (v10+ uses space, older versions use hyphen)
+        EXPECTED_VERSION_HYPHEN="cellranger-${{ matrix.version }}"
+        EXPECTED_VERSION_SPACE="cellranger ${{ matrix.version }}"
         
-        # Compare with the expected version
-        if [[ "$CELLRANGER_VERSION" != "$EXPECTED_VERSION" ]]; then
-          echo "Error: Cell Ranger version ($CELLRANGER_VERSION) doesn't match expected version ($EXPECTED_VERSION)"
-          exit 1
+        # Check if either format matches
+        if [[ "$CELLRANGER_OUTPUT" == *"$EXPECTED_VERSION_HYPHEN"* ]] || [[ "$CELLRANGER_OUTPUT" == *"$EXPECTED_VERSION_SPACE"* ]]; then
+          echo "✓ Cell Ranger version matches expected version: ${{ matrix.version }}"
+          echo "  Output: $CELLRANGER_OUTPUT"
         else
-          echo "✓ Cell Ranger version matches expected version: $EXPECTED_VERSION"
+          echo "Error: Cell Ranger version doesn't match expected version ${{ matrix.version }}"
+          echo "  Got: $CELLRANGER_OUTPUT"
+          exit 1
         fi
