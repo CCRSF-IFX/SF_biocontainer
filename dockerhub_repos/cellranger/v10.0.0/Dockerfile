@@ -19,11 +19,13 @@ RUN apt-get update --allow-releaseinfo-change \
 ENV CELLRANGER_VER=10.0.0
 COPY cellranger-$CELLRANGER_VER.tar.gz /opt/cellranger-$CELLRANGER_VER.tar.gz
 
+ENV TENX_IGNORE_DEPRECATED_OS=1
+ENV TENX_DISABLE_TELEMETRY=1
+
 # Install cellranger
 RUN \
     cd /opt && \
     tar -zxvf cellranger-$CELLRANGER_VER.tar.gz && \
     export PATH=/opt/cellranger-$CELLRANGER_VER:$PATH && \
     ln -s /opt/cellranger-$CELLRANGER_VER/cellranger /usr/bin/cellranger && \
-    rm -rf /opt/cellranger-$CELLRANGER_VER.tar.gz && \
-    cellranger telemetry disable
+    rm -rf /opt/cellranger-$CELLRANGER_VER.tar.gz
