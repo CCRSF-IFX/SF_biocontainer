@@ -1,0 +1,52 @@
+name: Test Cell Ranger Versions
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'dockerhub_repos/cellranger/*/Dockerfile'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'dockerhub_repos/cellranger/*/Dockerfile'
+
+jobs:
+  test_cellranger:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: 
+          - '7.1.0'
+          - '7.2.0'
+          - '8.0.0'
+          - '8.0.1'
+          - '9.0.0'
+          - '9.0.1'
+          - '10.0.0'
+      fail-fast: false  # Continue testing other versions even if one fails
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Pull Docker image
+      run: docker pull ccrsfifx/cellranger:${{ matrix.version }}
+      
+    - name: Run container and check cellranger version
+      run: docker run --rm ccrsfifx/cellranger:${{ matrix.version }} cellranger --version
+
+    - name: Validate version consistency
+      run: |
+        # Extract the version from the 'cellranger --version' output
+        CELLRANGER_VERSION=$(docker run --rm ccrsfifx/cellranger:${{ matrix.version }} cellranger --version | awk '{print $2}')
+        
+        # Expected version format
+        EXPECTED_VERSION="cellranger-${{ matrix.version }}"
+        
+        # Compare with the expected version
+        if [[ "$CELLRANGER_VERSION" != "$EXPECTED_VERSION" ]]; then
+          echo "Error: Cell Ranger version ($CELLRANGER_VERSION) doesn't match expected version ($EXPECTED_VERSION)"
+          exit 1
+        else
+          echo "✓ Cell Ranger version matches expected version: $EXPECTED_VERSION"
+        fi
