@@ -25,5 +25,5 @@ RUN \
     tar -zxvf cellranger-$CELLRANGER_VER.tar.gz && \
     export PATH=/opt/cellranger-$CELLRANGER_VER:$PATH && \
     ln -s /opt/cellranger-$CELLRANGER_VER/cellranger /usr/bin/cellranger && \
-    rm -rf /opt/cellranger-$CELLRANGER_VER.tar.gz #&& \
-    #cellranger telemetry disable
+    rm -rf /opt/cellranger-$CELLRANGER_VER.tar.gz && \
+    cellranger telemetry disable
