@@ -36,6 +36,10 @@ RUN R -e 'BiocManager::install("SpatialDecon");stopifnot("SpatialDecon" %in% ins
 RUN R -e 'devtools::install_version("readxl", version = "1.4.3", repos = "https://cran.rstudio.com/",upgrade = "never", force = TRUE)'
 RUN R -e 'devtools::install_github("YuLab-SMU/createKEGGdb@c7f6308");stopifnot("createKEGGdb" %in% installed.packages()[,"Package"])'
 RUN R -e 'BiocManager::install("SpatialExperiment");stopifnot("SpatialExperiment" %in% installed.packages()[,"Package"])'
+RUN apt update && \
+    apt install libtiff6 && \
+    ln -s /usr/lib/x86_64-linux-gnu/libtiff.so.6 /usr/lib/x86_64-linux-gnu/libtiff.so.5
+RUN R -e 'BiocManager::install("SpatialOmicsOverlay");stopifnot("SpatialOmicsOverlay" %in% installed.packages()[,"Package"])'
 
 #RUN pip3 install --upgrade pip && \
 #    pip3 install rpy2==3.5.4 && \
