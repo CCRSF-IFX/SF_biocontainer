@@ -29,3 +29,5 @@ RUN \
     export PATH=/opt/cellranger-$CELLRANGER_VER:$PATH && \
     ln -s /opt/cellranger-$CELLRANGER_VER/cellranger /usr/bin/cellranger && \
     rm -rf /opt/cellranger-$CELLRANGER_VER.tar.gz
+
+# cellranger --version returns cellranger 10.0.0 instead of cellranger-10.0.0
