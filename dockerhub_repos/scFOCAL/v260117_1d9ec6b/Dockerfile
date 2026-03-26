@@ -1,10 +1,6 @@
 FROM bioconductor/bioconductor_docker:RELEASE_3_21
 
 ARG SCFOCAL_REF=1d9ec6b
-ARG BIOC_VERSION=3.21
-ARG MAST_VERSION=1.32.0
-ARG EDGER_VERSION=4.4.2
-ARG COMPLEXHEATMAP_VERSION=2.22.0
 
 LABEL org.opencontainers.image.title="scFOCAL" \
       org.opencontainers.image.description="Container image for the scFOCAL Shiny application" \
@@ -36,17 +32,35 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN R -q -e "install.packages(c('remotes', 'pkgbuild'), repos = Sys.getenv('CRAN_REPO'))"
 
-# RUN R -q -e "repos <- BiocManager::repositories(version = '${BIOC_VERSION}'); \
-#     remotes::install_version('MAST', version = '${MAST_VERSION}', repos = repos, upgrade = 'never'); \
-#     remotes::install_version('edgeR', version = '${EDGER_VERSION}', repos = repos, upgrade = 'never'); \
-#     remotes::install_version('ComplexHeatmap', version = '${COMPLEXHEATMAP_VERSION}', repos = repos, upgrade = 'never')"
-
 RUN R -e 'BiocManager::install("MAST");stopifnot("MAST" %in% installed.packages()[,"Package"])'
 RUN R -e 'BiocManager::install("edgeR");stopifnot("edgeR" %in% installed.packages()[,"Package"])'
 RUN R -e 'BiocManager::install("ComplexHeatmap");stopifnot("ComplexHeatmap" %in% installed.packages()[,"Package"])'
 RUN R -e 'BiocManager::install("EnhancedVolcano");stopifnot("EnhancedVolcano" %in% installed.packages()[,"Package"])'
 
 RUN R -q -e "remotes::install_github('AyadLab/scFOCAL@${SCFOCAL_REF}', dependencies = TRUE, upgrade = 'never')"
+
+# Guard Seurat-dependent startup reactives until a .rds object has been uploaded.
+RUN R -q -e 'f <- system.file("shiny", "server.R", package = "scFOCAL"); \
+    x <- paste(readLines(f, warn = FALSE), collapse = "\n"); \
+    patches <- c( \
+      "rdsSeurat <- reactive({ req(input$seurobjRDS) readRDS(input$seurobjRDS$datapath) })" = "rdsSeurat <- reactive({ req(input$seurobjRDS$datapath); readRDS(input$seurobjRDS$datapath) })", \
+      "seurat_obj_version <- reactive({" = "seurat_obj_version <- reactive({ req(input$seurobjRDS$datapath);", \
+      "output$seurat_obj_v5 <- reactive({" = "output$seurat_obj_v5 <- reactive({ req(input$seurobjRDS$datapath);", \
+      "isOrthogonAL <- reactive({" = "isOrthogonAL <- reactive({ req(input$seurobjRDS$datapath);", \
+      "output$OrthogonAL <- reactive({" = "output$OrthogonAL <- reactive({ req(input$seurobjRDS$datapath);", \
+      "sl <- reactive({" = "sl <- reactive({ req(input$seurobjRDS$datapath);", \
+      "output$seuratLoaded <- reactive({" = "output$seuratLoaded <- reactive({ req(input$seurobjRDS$datapath);", \
+      "output$reductionUseRDS <- renderUI({" = "output$reductionUseRDS <- renderUI({ req(input$seurobjRDS$datapath);", \
+      "output$groupByRDS <- renderUI({" = "output$groupByRDS <- renderUI({ req(input$seurobjRDS$datapath);", \
+      "output$subject_replicate_ident <- renderUI({" = "output$subject_replicate_ident <- renderUI({ req(input$seurobjRDS$datapath);", \
+      "output$normalCellIdentsRDS <- renderUI({" = "output$normalCellIdentsRDS <- renderUI({ req(input$seurobjRDS$datapath);", \
+      "output$cancerCellIdentsRDS <- renderUI({" = "output$cancerCellIdentsRDS <- renderUI({ req(input$seurobjRDS$datapath);", \
+      "output$splitBySelecterRDS <- renderUI({" = "output$splitBySelecterRDS <- renderUI({ req(input$seurobjRDS$datapath);" \
+    ); \
+    for (i in seq_along(patches)) { \
+      x <- sub(names(patches)[i], unname(patches[i]), x, fixed = TRUE); \
+    }; \
+    writeLines(x, f)'
 
 WORKDIR /home/rstudio
 USER rstudio
