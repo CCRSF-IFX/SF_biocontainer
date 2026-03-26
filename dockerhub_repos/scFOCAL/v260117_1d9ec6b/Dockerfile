@@ -53,7 +53,7 @@ USER rstudio
 
 EXPOSE 3838
 
-CMD ["R", "-q", "-e", "options(shiny.host = Sys.getenv('SHINY_HOST', '0.0.0.0'), shiny.port = as.integer(Sys.getenv('SHINY_PORT', '3838'))); scFOCAL::runscFOCAL()"]
+CMD ["R", "-q", "-e", "library(scFOCAL); options(shiny.host = Sys.getenv('SHINY_HOST', '0.0.0.0'), shiny.port = as.integer(Sys.getenv('SHINY_PORT', '3838'))); scFOCAL::runscFOCAL()"]
 
 ########################################################################
 ## docker build -t scfocal -f Dockerfile .
